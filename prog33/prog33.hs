@@ -1,11 +1,7 @@
 import Data.List
 
-can = [(x,y) | x <- [1..9], y <- [1..9] , x/y < 1]
 
-isInt :: (RealFrac a) => a -> Bool
-isInt x = x == fromInteger (round x)
+fracs = [(a ,b) | a <-[1..9], b <-[1..9] , c <- [1..9], a*b*9+b*c == a*c*10, a `div` b < 1]
 
-world = [(x,y) | x <- [11..99], y <- [11..99] , x/y < 1 , not $ isInt (y/x) ]
-
-
-comp x y= (fst x)/(snd x) ==  (fst y)/(snd y) 
+problem_33 = foldr1 tupadd fracs where
+		tupadd (a,b) (c,d) = ( a*c `div` gcd( a*c)(b *d) , b*d `div` gcd (a*c) (b*d) )
