@@ -34,5 +34,19 @@ recurs z y
  | otherwise = recurs (tail y) (delete (head y) z )
 
 --prog23 :: Int -> Int 
-prog23 x = recurs [1..28123] (notanswer x)
+--prog23 x = recurs [1..28123] (notanswer x)
+
+abundant = [ x | x <- [1..28123] , checkAbundant x ]
+
+helper :: Int -> Int -> Bool
+helper x y 
+ | x > y = False
+ | otherwise = elem x abundant && elem y abundant || helper (x+1) (y-1)
+
+canabun :: Int -> Bool
+canabun x 
+ | x < 12 = False
+ | otherwise = helper 12 (x-12)
+
+problem_23 = sum [1..281234] - sum $ filter canabun [1..28123] 
 
