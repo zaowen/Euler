@@ -3,11 +3,11 @@
 
 /*
 
-We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once; for example, the 5-digit number, 15234, is 1 through 5 pandigital.
+   We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once; for example, the 5-digit number, 15234, is 1 through 5 pandigital.
 
-The product 7254 is unusual, as the identity, 39 × 186 = 7254, containing multiplicand, multiplier, and product is 1 through 9 pandigital.
+   The product 7254 is unusual, as the identity, 39 × 186 = 7254, containing multiplicand, multiplier, and product is 1 through 9 pandigital.
 
-Find the sum of all products whose multiplicand/multiplier/product identity can be written as a 1 through 9 pandigital.
+   Find the sum of all products whose multiplicand/multiplier/product identity can be written as a 1 through 9 pandigital.
 HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.
 
 
@@ -16,54 +16,53 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 
 #include <iostream>
 #include <cmath>
+#include <algorithm>
+#include <vector>
+
 using namespace std;
 
-void seperate( int n, int pigeon[]);
 
-int main()
-{
-int pigeon[4];
-int ten = [9];
-int check;
-int checker[100] = {0};
-int checkspot=0;
-int flag = 0;
-bool add = true;
+int main () {
 
-for(int i = 0; i <= 9; i++)
-	for(int j = 0; j <= 9; j++ )
-		for(int k = 0; k <=9; k++ )
-			for(int l = 0; l <=9; l++)
-				for(int m = 0; m <=9; m++ )
-{
-check = (i*10+j)*(k*100+l*10+m);
-	if (check < 9876)
-	{
-	cout << "testing case :"<<i*10+j<<'*'<<(k*100+l*10+m)<< '=' << check << endl;
-	seperate( check, pigeon);
-	for(int a = 4; a < 9; a++)
-	
-	}	
-}	
+		vector<int> list;
+		int sum = 0;
+		int arr[] = {1,2,3,4,5,6,7,8,9};
 
-cout << sum << endl;
-}
+		do{
+				int multiplicand =  arr[0] * 10 + arr[1];
+				int multiplier =  arr[2] * 100 + arr[3] * 10 + arr[4];
+				int product = arr[5] * 1000 + arr[6] * 100 + arr[7] * 10 + arr[8];
+				//cout << multiplicand << " * " << multiplier << " = " << product << endl;
 
-void seperate( int n, int pigeon[])
-{
-int hole= 0;
-int temp = 0;
+				if( multiplicand * multiplier == product ){
+						list.push_back( product );
+					cout << multiplicand << " * " << multiplier << " = " << product << endl;
+				}
+				multiplicand =  arr[0];
+				multiplier =  arr[1] * 1000 + arr[2] * 100 + arr[3] * 10 + arr[4];
+				product = arr[5] * 1000 + arr[6] * 100 + arr[7] * 10 + arr[8];
 
-for(int i = 0; i < 4; i++)
-	{
-	pigeon[i] = 0;
-	}
+				if( multiplicand * multiplier == product ){
+						list.push_back( product );
+					cout << multiplicand << " * " << multiplier << " = " << product << endl;
+				}
+		}while( next_permutation( arr, arr + 9 ) );
 
-while (n != 0)
-	{
-	temp = n % 10;
-	pigeon[hole] = temp;
-	hole++;
-	n = (n-temp)/10;
-	}
+
+		sort( list.begin(), list.end() );
+
+		vector<int>::iterator it = list.begin();
+		//list.resize( std::distance(list.begin(),it) );
+
+		cout << "unique list" << endl;
+		while( it != list.end() ){
+				if( *(it+1) != *it ){
+						cout << *it << endl;
+						sum += *it++;
+				}
+				else
+					it++;
+		}
+
+		cout << sum << endl;
 }
