@@ -1,0 +1,37 @@
+
+vector<int> PRIMES = {2,3,5};
+bool isPRIME( int a ){
+	vector<int>::iterator it;
+
+	if( a & 0x1 == 0 && a > 2)
+			return false;
+
+	int top = PRIMES.back();
+	while( a > PRIMES.back() ){
+			it = PRIMES.begin();
+			top += 2;
+			
+			while( it != PRIMES.end() ) 
+				if( top % *it++ == 0) 
+					break;
+			if( it == PRIMES.end() )
+					PRIMES.push_back( top );
+
+	}
+
+		int i;
+		it = PRIMES.begin();
+		while( it!= PRIMES.end() ){
+				if( *it++ == a )
+						return true;
+		}
+		return false;
+}
+
+		int arr[] = {1,2,3,4,5,6,7,8,9};
+
+		do{
+
+		}while( next_permutation( arr, arr + 9 ) );
+
+
