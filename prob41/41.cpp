@@ -6,67 +6,70 @@ using namespace std;
 
 map<int,int> PRIMES;
 bool isPRIME( int a ){
-		map<int, int>::iterator it;
+	//cout << a << endl;
+	map<int,int>::iterator it = PRIMES.begin();
 
-		if( a & 0x1 == 0 && a > 2)
-				return false;
-
-		map<int,int>::reverse_iterator top = PRIMES.rbegin();
-		while( a > (*PRIMES.rbegin() ) ){
-				it = PRIMES.begin();
-				top += 2;
-
-				while( it != PRIMES.end() ) 
-						if( top % *it++ == 0) 
-								break;
-				if( it == PRIMES.end() )
-						PRIMES[ top ] = top;
-
-		}
-
-		int i;
-		//it = PRIMES.begin();
-			if( PRIMES.find( a )  )
-						return true;
-		}
+	if( a & 1 == 0)
 		return false;
+	if( a == 1)
+		return false;
+
+	while( it++ != PRIMES.end() ){
+		if( a % (it -> first) == 0 ) {
+			return false;
+		}
+	}
+	return true;
+}
+
+void mkPrimes( int a ){
+	PRIMES[2] = 2; 
+	PRIMES[3] = 3; 
+	PRIMES[5] = 5; 
+
+
+
+	for( int i = 7; i < a; i += 2 ){
+		if( isPRIME( i ) ){
+			PRIMES[i] = i;
+		}
+	}
 }
 
 int arrtoint( int * a, int d ){
-		int i, sum;
-		int radix = 1; 
-		for( i = 0 ; i < d; i++){
-				sum += a[d-i-1] * radix;
-				radix *= 10;
-		}
-		return sum;
+	int i, sum = 0;
+	int radix = 1; 
+	for( i = 0 ; i < d; i++){
+		sum += a[d-i-1] * radix;
+		radix *= 10;
+	}
+	return sum;
 }
 
 
 int main (){
 
-PRIMES[2] = 2; 
-PRIMES[3] = 3; 
-PRIMES[5] = 5; 
 
-		int arr[] = {1,2,3,4,5,6,7,8,9};
-		int best = 1;
-		int	temp = 1;
+	int arr[] = {1,2,3,4,5,6,7,8,9};
+	int temp;
+	int answer;
 
-		cout << isPRIME(1000000001) << endl;
 
-		for( int i = 9; i > 0; i-- ){
-				do{
-						int temp = arrtoint( arr ,i) ;
+	mkPrimes( 40000 );
+	//cout << PRIMES.size() << endl;
 
-						if(isPRIME( temp ) ) {
-								if( temp  > best ){
-										best = temp;
-								}	
-						}
-				}while( next_permutation( arr, arr + i ) );
-		}
+	for( int i = 9; i > 0; i-- ){
+		do{
+			temp = arrtoint( arr ,i);
 
-		cout << best << endl;
-		return -1;
+			//cout << temp << endl;
+			if( isPRIME( temp ) ) {
+				answer = temp;
+			}
+
+		}while( next_permutation( arr, arr + i ) );
+	}
+	cout << answer << endl;
+
+	return 0;
 }
