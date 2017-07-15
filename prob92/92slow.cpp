@@ -65,7 +65,6 @@ int main( int argc, char * argv[] ){
 
 	for( int i = 2; i < MILL; i++){
 		if( 89 == cycle(i) ){
-			//printf( " found \n");
 			total++;
 		}
 	}
